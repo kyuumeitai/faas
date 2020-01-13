@@ -8,17 +8,15 @@ services:
             --docker.watch=true
             --web=true
             --defaultEntryPoints='http,https'
-            --entryPoints='Name:https Address::443 TLS'
-            --entryPoints='Name:http Address::80'
-            --certificatesResolvers.sample.acme=true
-            --certificatesResolvers.sample.acme.entrypoint='https'
-            --certificatesResolvers.sample.acme.httpchallenge=true
-            --certificatesResolvers.sample.acme.httpchallenge.entrypoint='http'
-            --certificatesResolvers.sample.acme.domains='faas.ltnext.com'
-            --certificatesResolvers.sample.acme.email='kyuumeitai@gmail.com'
-            --certificatesResolvers.sample.acme.ondemand=true
-            --certificatesResolvers.sample.acme.onhostrule=true
-            --certificatesResolvers.sample.acme.storage=/etc/traefik/acme/acme.json
+            --entryPoints.web.address=:80
+            --entryPoints.websecure.address=:883
+            --certificatesResolvers.le.acme.email='kyuumeitai@gmail.com'
+            --certificatesResolvers.le.acme.httpChallenge=true
+            --certificatesResolvers.le.acme.httpChallenge.entryPoint=web
+            --certificatesResolvers.le.acme.domains='faas.ltnext.com'
+            --certificatesResolvers.le.acme.ondemand=true
+            --certificatesResolvers.le.acme.onhostrule=true
+            --certificatesResolvers.le.acme.storage=/etc/traefik/acme/acme.json
         ports:
             - 80:80
             - 8080:8080
