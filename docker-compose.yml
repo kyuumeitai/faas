@@ -10,15 +10,15 @@ services:
             --defaultEntryPoints='http,https'
             --entryPoints='Name:https Address::443 TLS'
             --entryPoints='Name:http Address::80'
-            --acme=true
-            --acme.entrypoint='https'
-            --acme.httpchallenge=true
-            --acme.httpchallenge.entrypoint='http'
-            --acme.domains='faas.ltnext.com'
-            --acme.email='kyuumeitai@gmail.com'
-            --acme.ondemand=true
-            --acme.onhostrule=true
-            --acme.storage=/etc/traefik/acme/acme.json
+            --certificatesResolvers.sample.acme=true
+            --certificatesResolvers.sample.acme.entrypoint='https'
+            --certificatesResolvers.sample.acme.httpchallenge=true
+            --certificatesResolvers.sample.acme.httpchallenge.entrypoint='http'
+            --certificatesResolvers.sample.acme.domains='faas.ltnext.com'
+            --certificatesResolvers.sample.acme.email='kyuumeitai@gmail.com'
+            --certificatesResolvers.sample.acme.ondemand=true
+            --certificatesResolvers.sample.acme.onhostrule=true
+            --certificatesResolvers.sample.acme.storage=/etc/traefik/acme/acme.json
         ports:
             - 80:80
             - 8080:8080
