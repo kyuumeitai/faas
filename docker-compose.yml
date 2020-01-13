@@ -1,8 +1,37 @@
 version: "3.3"
 services:
-    gateway:
+    traefik:
+        image: traefik:latest
+        command: -c --docker=true
+            --docker.swarmmode=true
+            --docker.domain=traefik
+            --docker.watch=true
+            --web=true
+            --defaultEntryPoints='http,https'
+            --entryPoints='Name:https Address::443 TLS'
+            --entryPoints='Name:http Address::80'
+            --acme=true
+            --acme.entrypoint='https'
+            --acme.httpchallenge=true
+            --acme.httpchallenge.entrypoint='http'
+            --acme.domains='faas.ltnext.com'
+            --acme.email='kyuumeitai@gmail.com'
+            --acme.ondemand=true
+            --acme.onhostrule=true
+            --acme.storage=/etc/traefik/acme/acme.json
         ports:
+            - 80:80
             - 8080:8080
+            - 443:443
+        volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
+            - "acme:/etc/traefik/acme"
+        networks:
+            - functions
+        deploy:
+            placement:
+                constraints: [node.role == manager]
+    gateway:
         image: openfaas/gateway:0.18.10
         networks:
             - functions
@@ -24,6 +53,9 @@ services:
             auth_proxy_url: "${AUTH_URL:-}"
             auth_proxy_pass_body: "false"
         deploy:
+            labels:
+                - traefik.port=8080
+                - traefik.frontend.rule=PathPrefix:/ui,/system,/function
             resources:
                 # limits:   # Enable if you want to limit memory usage
                 #     memory: 200M
@@ -230,3 +262,5 @@ secrets:
         external: true
     basic-auth-password:
         external: true
+volumes:
+    acme:
