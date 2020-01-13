@@ -29,6 +29,8 @@ services:
         networks:
             - functions
         deploy:
+            update_config:
+                order: stop-first
             placement:
                 constraints: [node.role == manager]
     gateway:
