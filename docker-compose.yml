@@ -2,7 +2,7 @@ version: "3.3"
 services:
     traefik:
         image: traefik:latest
-        command: -c --docker=true
+        command: --docker=true
             --docker.swarmmode=true
             --docker.domain=traefik
             --docker.watch=true
