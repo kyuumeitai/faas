@@ -54,10 +54,6 @@ services:
         deploy:
             labels:
                 - traefik.enable=true
-                - traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)
-                - traefik.http.routers.http-catchall.entrypoints=web
-                - traefik.http.routers.http-catchall.middlewares=redirect-to-https@docker
-                - traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https
                 - traefik.http.routers.gateway.rule=Host(`faas.ltnext.com`) && PathPrefix(`/ui`,`/system`,`/function`)
                 - traefik.http.routers.gateway.entrypoints=websecure
                 - traefik.http.routers.gateway.tls.certresolver=letsencryptresolver
