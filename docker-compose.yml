@@ -2,27 +2,28 @@ version: "3.3"
 services:
     traefik:
         image: traefik:latest
-        command: --docker=true
-            --docker.swarmmode=true
-            --docker.domain=traefik
-            --docker.watch=true
-            --web=true
-            --defaultEntryPoints='http,https'
+        command:
+            --api=true
+            --api.insecure=true
+            --api.dashboard=true
+            --api.debug=true
+            --providers.docker=true
+            --providers.docker.swarmMode=true
+            --providers.docker.endpoint=unix:///var/run/docker.sock
+            --providers.docker.exposedByDefault=false
             --entryPoints.web.address=:80
-            --entryPoints.websecure.address=:883
-            --certificatesResolvers.le.acme.email='kyuumeitai@gmail.com'
-            --certificatesResolvers.le.acme.httpChallenge=true
-            --certificatesResolvers.le.acme.httpChallenge.entryPoint=web
-            --certificatesResolvers.le.acme.domains='faas.ltnext.com'
-            --certificatesResolvers.le.acme.ondemand=true
-            --certificatesResolvers.le.acme.onhostrule=true
-            --certificatesResolvers.le.acme.storage=/etc/traefik/acme/acme.json
+            --entryPoints.websecure.address=:443
+            --certificatesResolvers.letsencryptresolver.acme.email='kyuumeitai@gmail.com'
+            --certificatesResolvers.letsencryptresolver.acme.httpChallenge=true
+            --certificatesResolvers.letsencryptresolver.acme.httpChallenge.entryPoint=web
+            --certificatesResolvers.letsencryptresolver.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory
+            --certificatesResolvers.letsencryptresolver.acme.storage=/etc/traefik/acme/acme.json
         ports:
             - 80:80
             - 8080:8080
             - 443:443
         volumes:
-            - "/var/run/docker.sock:/var/run/docker.sock"
+            - "/var/run/docker.sock:/var/run/docker.sock:ro"
             - "acme:/etc/traefik/acme"
         networks:
             - functions
@@ -52,8 +53,15 @@ services:
             auth_proxy_pass_body: "false"
         deploy:
             labels:
-                - traefik.port=8080
-                - traefik.frontend.rule=PathPrefix:/ui,/system,/function
+                - traefik.enable=true
+                - traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)
+                - traefik.http.routers.http-catchall.entrypoints=web
+                - traefik.http.routers.http-catchall.middlewares=redirect-to-https@docker
+                - traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https
+                - traefik.http.routers.gateway.rule=Host(`faas.ltnext.com`) && PathPrefix(`/ui`,`/system`,`/function`)
+                - traefik.http.routers.gateway.entrypoints=websecure
+                - traefik.http.routers.gateway.tls.certresolver=letsencryptresolver
+                - traefik.http.services.gateway.loadbalancer.server.port=8080
             resources:
                 # limits:   # Enable if you want to limit memory usage
                 #     memory: 200M
