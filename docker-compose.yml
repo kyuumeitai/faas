@@ -21,7 +21,7 @@ services:
             --certificatesResolvers.letsencryptresolver.acme.email='kyuumeitai@gmail.com'
             --certificatesResolvers.letsencryptresolver.acme.httpChallenge=true
             --certificatesResolvers.letsencryptresolver.acme.httpChallenge.entryPoint=web
-            --certificatesResolvers.letsencryptresolver.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory
+            # --certificatesResolvers.letsencryptresolver.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory
             --certificatesResolvers.letsencryptresolver.acme.storage=/etc/traefik/acme/acme.json
         ports:
             - 80:80
@@ -61,6 +61,7 @@ services:
                 - traefik.enable=true
                 - traefik.http.routers.gateway.rule=Host(`faas.ltnext.com`) && PathPrefix(`/ui`,`/system`,`/function`)
                 - traefik.http.routers.gateway.entrypoints=websecure
+                - traefik.http.routers.gateway.tls=true
                 - traefik.http.routers.gateway.tls.certresolver=letsencryptresolver
                 - traefik.http.services.gateway.loadbalancer.server.port=8080
             resources:
