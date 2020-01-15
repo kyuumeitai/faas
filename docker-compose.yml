@@ -21,7 +21,6 @@ services:
             --certificatesResolvers.letsencryptresolver.acme.email='kyuumeitai@gmail.com'
             --certificatesResolvers.letsencryptresolver.acme.httpChallenge=true
             --certificatesResolvers.letsencryptresolver.acme.httpChallenge.entryPoint=web
-            # --certificatesResolvers.letsencryptresolver.acme.caServer=https://acme-staging-v02.api.letsencrypt.org/directory
             --certificatesResolvers.letsencryptresolver.acme.storage=/etc/traefik/acme/acme.json
         ports:
             - 80:80
