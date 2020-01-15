@@ -13,6 +13,11 @@ services:
             --providers.docker.exposedByDefault=false
             --entryPoints.web.address=:80
             --entryPoints.websecure.address=:443
+            --entryPoints.name.transport.respondingTimeouts.readTimeout=42
+            --entryPoints.name.transport.respondingTimeouts.writeTimeout=42
+            --entryPoints.name.transport.respondingTimeouts.idleTimeout=42
+            --entryPoints.name.transport.lifeCycle.requestAcceptGraceTimeout=42
+            --entryPoints.name.transport.lifeCycle.graceTimeOut=42
         ports:
             - 80:80
             - 8080:8080
