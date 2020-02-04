@@ -1,0 +1,14 @@
+debug: false
+letsencrypt: false
+letsencryptEmail: admin@domain.com
+compress: true
+baseDomain: false
+cors: false
+updateChannel: stable
+traefikImage: 'traefik:latest'
+traefikName: exoframe-traefik
+traefikArgs: []
+exoframeNetwork: exoframe
+publicKeysPath: /root/.ssh
+plugins:
+  install: []

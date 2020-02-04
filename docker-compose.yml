@@ -34,6 +34,26 @@ services:
         deploy:
             placement:
                 constraints: [node.role == manager]
+    exoframe:
+        image: exoframe/server:latest
+        networks:
+            - functions
+        volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock:ro"
+            - "./exoframe:/root/.exoframe"
+            # - "~/.ssh/authorized_keys:/root/.ssh/authorized_keys:ro"
+        environment:
+            EXO_PRIVATE_KEY: 'asdfasdf'
+        deploy:
+            labels:
+                - traefik.enable=true
+                - traefik.http.routers.exoframe.rule=Host(`featured.ltnext.com`)
+                - traefik.http.routers.exoframe.tls.certresolver=letsencryptresolver
+                - traefik.http.routers.exoframe.service=exoframe
+                - traefik.http.services.exoframe.loadbalancer.server.port=8080
+            placement:
+                constraints:
+                    - "node.role == manager"
     gateway:
         image: openfaas/gateway:0.18.10
         networks:
@@ -272,3 +292,4 @@ secrets:
         external: true
 volumes:
     acme:
+    exoframe:

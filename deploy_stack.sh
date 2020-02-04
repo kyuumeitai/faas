@@ -5,6 +5,14 @@ if ! [ -x "$(command -v docker)" ]; then
   exit 1
 fi
 
+if [ -z ${PRODUCTION+x} ];
+then
+  export PRODUCTION="true"
+else
+  echo "PRODUCTION env variable setted to: '$PRODUCTION'"
+fi
+
+
 export BASIC_AUTH="false"
 export AUTH_URL="http://basic-auth-plugin:8080/validate"
 
@@ -51,18 +59,19 @@ else
   echo ""
 fi
 
-arch=$(uname -m)
-case "$arch" in
+if [ $PRODUCTION = "true" ];
+then
+  echo ""
+  echo "Deploying OpenFaaS core services in PRODUCTION mode"
+    composefile="docker-compose.yml"
+  echo ""
+else
+  echo ""
+  echo "Deploying OpenFaaS core services in DEVELOPMENT mode"
+    composefile="docker-compose.development.yml"
+  echo ""
+fi
 
-"armv7l") echo "Deploying OpenFaaS core services for ARM"
-          composefile="docker-compose.armhf.yml"
-          ;;
-"aarch64") echo "Deploying OpenFaaS core services for ARM64"
-          composefile="docker-compose.arm64.yml"
-          ;;
-*) echo "Deploying OpenFaaS core services"
-   composefile="docker-compose.yml"
-   ;;
-esac
+
 
 docker stack deploy func --compose-file $composefile
