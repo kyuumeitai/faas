@@ -1,12 +1,12 @@
 debug: false
 letsencrypt: false
-letsencryptEmail: admin@domain.com
+letsencryptEmail: kyuumeitai@gmail.com
 compress: true
 baseDomain: false
 cors: false
 updateChannel: stable
-traefikImage: 'traefik:latest'
-traefikName: exoframe-traefik
+traefikImage: false
+traefikName: exoframe
 traefikArgs: []
 exoframeNetwork: exoframe
 publicKeysPath: /root/.ssh
