@@ -41,7 +41,7 @@ services:
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock:ro"
             - "./exoframe:/root/.exoframe"
-            # - "~/.ssh/authorized_keys:/root/.ssh/authorized_keys:ro"
+            - "/root/.ssh/authorized_keys:/root/.ssh/authorized_keys:ro"
         environment:
             EXO_PRIVATE_KEY: 'asdfasdf'
         deploy:
