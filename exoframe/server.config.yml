@@ -1,8 +1,8 @@
-debug: false
+debug: true
 letsencrypt: false
 letsencryptEmail: kyuumeitai@gmail.com
 compress: true
-baseDomain: false
+baseDomain: featured.ltnext.com
 cors: false
 updateChannel: stable
 traefikImage: false
