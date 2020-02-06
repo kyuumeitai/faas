@@ -34,7 +34,7 @@ services:
         deploy:
             placement:
                 constraints: [node.role == manager]
-    exoframe:
+    exoframe-server:
         image: exoframe/server:latest
         networks:
             - functions
@@ -47,20 +47,20 @@ services:
         deploy:
             labels:
                 - traefik.enable=true
-                - traefik.http.routers.exoframe.service=exoframe
+                - traefik.http.routers.exoframe-server.service=exoframe
 
-                - traefik.http.middlewares.exoframe-https.redirectscheme.scheme=https
-                - traefik.http.routers.exoframe.tls.certresolver=letsencryptresolver
-                - traefik.http.routers.exoframe.entrypoints=websecure
+                - traefik.http.middlewares.exoframe-server-https.redirectscheme.scheme=https
+                - traefik.http.routers.exoframe-server.tls.certresolver=letsencryptresolver
+                - traefik.http.routers.exoframe-server.entrypoints=websecure
 
-                - traefik.http.middlewares.exoframe-compress.compress=true
+                - traefik.http.middlewares.exoframe-server-compress.compress=true
 
-                # - traefik.http.middlewares.exoframe-redirect.redirectscheme.scheme=https
-                # - traefik.http.routers.exoframe-web.entrypoints=web
-                # - traefik.http.routers.exoframe-web.middlewares=exoframe-redirect@docker
-                - traefik.http.services.exoframe.loadbalancer.server.port=8080
-                - traefik.http.routers.exoframe.rule=Host(`featured.ltnext.com`)
-                # - traefik.http.routers.exoframe-web.rule=Host(`featured.ltnext.com`)
+                # - traefik.http.middlewares.exoframe-server-redirect.redirectscheme.scheme=https
+                # - traefik.http.routers.exoframe-server-web.entrypoints=web
+                # - traefik.http.routers.exoframe-server-web.middlewares.exoframe-server-redirect@docker
+                - traefik.http.services.exoframe-server.loadbalancer.server.port=8080
+                - traefik.http.routers.exoframe-server.rule=Host(`featured.ltnext.com`)
+                # - traefik.http.routers.exoframe-server-web.rule=Host(`featured.ltnext.com`)
 
             placement:
                 constraints:
