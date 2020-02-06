@@ -47,7 +47,7 @@ services:
         deploy:
             labels:
                 - traefik.enable=true
-                - traefik.http.routers.exoframe-server.service=exoframe
+                - traefik.http.routers.exoframe-server.service=exoframe-server
 
                 - traefik.http.middlewares.exoframe-server-https.redirectscheme.scheme=https
                 - traefik.http.routers.exoframe-server.tls.certresolver=letsencryptresolver
