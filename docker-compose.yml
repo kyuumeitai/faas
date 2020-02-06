@@ -285,6 +285,7 @@ configs:
 networks:
     exoframe:
         driver: overlay
+        attachable: true
     functions:
         driver: overlay
         attachable: true
