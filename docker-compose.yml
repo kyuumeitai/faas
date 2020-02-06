@@ -283,6 +283,8 @@ configs:
         file: ./prometheus/alertmanager.yml
 
 networks:
+    exoframe:
+        driver: bridge
     functions:
         driver: overlay
         attachable: true
