@@ -59,8 +59,8 @@ services:
                 # - traefik.http.routers.exoframe-server-web.entrypoints=web
                 # - traefik.http.routers.exoframe-server-web.middlewares.exoframe-server-redirect@docker
                 - traefik.http.services.exoframe-server.loadbalancer.server.port=8080
-                - traefik.http.routers.exoframe-server.rule=Host(`featured.ltnext.com`)
-                # - traefik.http.routers.exoframe-server-web.rule=Host(`featured.ltnext.com`)
+                - traefik.http.routers.exoframe-server.rule=Host(`exoframe.ltnext.com`)
+                # - traefik.http.routers.exoframe-server-web.rule=Host(`exoframe.ltnext.com`)
 
             placement:
                 constraints:
