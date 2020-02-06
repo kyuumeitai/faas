@@ -1,14 +1,14 @@
 debug: true
-letsencrypt: false
+letsencrypt: true
 letsencryptEmail: kyuumeitai@gmail.com
 compress: true
 baseDomain: featured.ltnext.com
 cors: false
 updateChannel: stable
 traefikImage: false
-traefikName: exoframe
+traefikName: func_traefik
 traefikArgs: []
-exoframeNetwork: exoframe
+exoframeNetwork: functions
 publicKeysPath: /root/.ssh
 plugins:
   install: []

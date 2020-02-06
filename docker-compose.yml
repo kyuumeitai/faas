@@ -31,13 +31,14 @@ services:
             - "./acme:/etc/traefik/acme"
         networks:
             - functions
+            - exoframe
         deploy:
             placement:
                 constraints: [node.role == manager]
     exoframe:
         image: exoframe/server:latest
         networks:
-            - functions
+            - exoframe
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock:ro"
             - "./exoframe:/root/.exoframe"
@@ -50,7 +51,10 @@ services:
                 - traefik.http.routers.exoframe.rule=Host(`featured.ltnext.com`)
                 - traefik.http.routers.exoframe.tls.certresolver=letsencryptresolver
                 - traefik.http.routers.exoframe.service=exoframe
+                - traefik.http.routers.exoframe.entrypoints=web
                 - traefik.http.services.exoframe.loadbalancer.server.port=8080
+                - traefik.http.middlewares.exoframe-compress.compress=true
+
             placement:
                 constraints:
                     - "node.role == manager"
