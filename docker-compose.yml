@@ -31,14 +31,13 @@ services:
             - "./acme:/etc/traefik/acme"
         networks:
             - functions
-            - exoframe
         deploy:
             placement:
                 constraints: [node.role == manager]
     exoframe:
         image: exoframe/server:latest
         networks:
-            - exoframe
+            - functions
         volumes:
             - "/var/run/docker.sock:/var/run/docker.sock:ro"
             - "./exoframe:/root/.exoframe"
@@ -283,9 +282,9 @@ configs:
         file: ./prometheus/alertmanager.yml
 
 networks:
-    exoframe:
-        driver: overlay
-        attachable: true
+    # exoframe:
+    #     driver: overlay
+    #     attachable: true
     functions:
         driver: overlay
         attachable: true
