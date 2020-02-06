@@ -56,9 +56,9 @@ services:
                 - traefik.http.middlewares.exoframe-compress.compress=true
 
                 - traefik.http.middlewares.exoframe-redirect.redirectscheme.scheme='https'
-                - traefik.http.routers.exoframe-web.entrypoints='web'
+                - traefik.http.routers.exoframe-web.entrypoints=web
                 - traefik.http.routers.exoframe-web.middlewares='exoframe.redirect@docker' # para qué es esto??
-                - traefik.http.services.exoframe.loadbalancer.server.port=80
+                - traefik.http.services.exoframe.loadbalancer.server.port=8080
                 - traefik.http.routers.exoframe.rule=Host(`featured.ltnext.com`)
                 - traefik.http.routers.exoframe-web.rule=Host(`featured.ltnext.com`)
 
