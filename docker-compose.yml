@@ -60,6 +60,8 @@ services:
                 # - traefik.http.routers.exoframe-server-web.middlewares.exoframe-server-redirect@docker
                 - traefik.http.services.exoframe-server.loadbalancer.server.port=8080
                 - traefik.http.routers.exoframe-server.rule=Host(`exoframe.ltnext.com`)
+                - traefik.http.routers.exoframe-server.tls=true
+                - traefik.http.routers.exoframe-server.tls.certresolver=letsencryptresolver
                 # - traefik.http.routers.exoframe-server-web.rule=Host(`exoframe.ltnext.com`)
 
             placement:
