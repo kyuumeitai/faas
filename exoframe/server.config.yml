@@ -11,4 +11,6 @@ traefikArgs: []
 exoframeNetwork: functions
 publicKeysPath: /root/.ssh
 plugins:
-  install: []
+  install: ['exoframe-plugin-swarm']
+  swarm:
+    enabled: true
