@@ -8,10 +8,10 @@ updateChannel: stable
 traefikImage: false
 traefikName: traefik
 traefikArgs: []
-exoframeNetwork: functions
+exoframeNetwork: 'func_functions'
 publicKeysPath: /root/.ssh
 plugins:
   install: ['exoframe-plugin-swarm']
   swarm:
     enabled: true
-    network: 'functions'
+    network: 'func_functions'
