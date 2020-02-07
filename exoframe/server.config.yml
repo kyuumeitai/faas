@@ -1,17 +1,17 @@
 debug: true
 letsencrypt: true
-letsencryptEmail: kyuumeitai@gmail.com
+letsencryptEmail: 'kyuumeitai@gmail.com'
 compress: true
-baseDomain: featured.ltnext.com
+baseDomain: 'featured.ltnext.com'
 cors: false
-updateChannel: stable
+updateChannel: 'stable'
 traefikImage: false
-traefikName: traefik
-traefikArgs: []
+traefikName: 'func_traefik'
+traefikArgs: ['']
 exoframeNetwork: 'func_functions'
-publicKeysPath: /root/.ssh
+publicKeysPath: '/root/.ssh'
 plugins:
   install: ['exoframe-plugin-swarm']
   swarm:
-    enabled: true
+    enabled: 'true'
     network: 'func_functions'
