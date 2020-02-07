@@ -6,7 +6,7 @@ baseDomain: featured.ltnext.com
 cors: false
 updateChannel: stable
 traefikImage: false
-traefikName: func_traefik
+traefikName: traefik
 traefikArgs: []
 exoframeNetwork: functions
 publicKeysPath: /root/.ssh
